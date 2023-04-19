@@ -882,3 +882,37 @@ export default async function RootLayout({
 ```
 
 Now we need to create pages / routes for our "about" and "contact" pages. In the `app/(site)/projects` folder create a new route folder withe a page: `[slug]/page.tsx`. 
+
+## VisionTool - run quick sample queries of your data in a Groq Playground
+
+Ok, while not always necessary if you've got relatively simple data structures with minimal content, getting a visual on how your data is returned can be mighty helpful. For this, Sanity have built the `visionTool`, a Groq playground that lets us run queries right from the Sanity Studio. 
+
+Recall earlier when we migrated our studio to live inside the Next JS app. In the root of the Next app we created the `sanity.config.ts` file with copied content from our initial Sanity project. We will install and import the VisionTool here alongside the already existing DeskTool. 
+
+```
+// sanity.config.ts 
+
+import { defineConfig } from 'sanity';
+import { deskTool } from 'sanity/desk'
+import schemas from './sanity/schemas';
+import { visionTool } from '@sanity/vision';
+
+const config = defineConfig({
+
+  projectId: 'lljix40d',
+  dataset: 'production',
+  title: 'Thinking In Circles',
+  apiVersion: '2023-04-08',
+  basePath: '/admin',
+
+
+  plugins: [deskTool(), visionTool()],
+
+  schema: { types: schemas }
+})
+
+export default config
+```
+
+Now, when you restart / start your server, you should now see beside the "Desk" section in the studio, a new "Vision" section with an eyeball icon. Beauty. This is where we can sample our data. 
+
